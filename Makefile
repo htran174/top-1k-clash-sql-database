@@ -93,7 +93,16 @@ cloud-load-from-local: wait-db require-CLOUD_DB_HOST require-CLOUD_DB_NAME requi
 # Full LOCAL → CLOUD refresh pipeline
 # ----------------------------------
 
-.PHONY: cloud-refresh
+.PHONY: cloud-refresh cloud-validate cloud-publish
 
 cloud-refresh: cloud-reset cloud-schema cloud-load-from-local
 	@echo "CLOUD REFRESH COMPLETE 🚀"
+
+cloud-validate: require-CLOUD_DB_HOST require-CLOUD_DB_NAME require-CLOUD_DB_USER require-CLOUD_PGPASSWORD
+	@echo "Running validation against CLOUD..."
+	DATABASE_URL="postgresql+psycopg2://$(CLOUD_DB_USER):$(CLOUD_PGPASSWORD)@$(CLOUD_DB_HOST):5432/$(CLOUD_DB_NAME)" \
+	python -m $(VALIDATE_MODULE) --top-n $(TOPN)
+	@echo "Cloud validation passed ✅ (top-n=$(TOPN))"
+
+cloud-publish: cloud-refresh cloud-validate
+	@echo "CLOUD PUBLISH COMPLETE ✅"
