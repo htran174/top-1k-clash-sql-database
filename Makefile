@@ -1,4 +1,4 @@
-# Makefile (drop-in)
+# Makefile
 
 export PYTHONPATH := $(PWD)/src
 
