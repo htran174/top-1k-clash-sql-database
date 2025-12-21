@@ -58,7 +58,7 @@ test:
 # Cloud SQL (no Docker)
 # -------------------------
 
-.PHONY: cloud-schema cloud-etl cloud-validate cloud-refresh cloud-psql cloud-reset cloud-load-from-local
+.PHONY: cloud-schema cloud-etl cloud-psql cloud-reset cloud-load-from-local
 
 # Helper: require env var
 require-%:
@@ -84,15 +84,7 @@ cloud-etl: require-CLOUD_DB_HOST require-CLOUD_DB_NAME require-CLOUD_DB_USER req
 	DATABASE_URL="postgresql+psycopg2://$(CLOUD_DB_USER):$(CLOUD_PGPASSWORD)@$(CLOUD_DB_HOST):5432/$(CLOUD_DB_NAME)" \
 	python -m $(ETL_MODULE) --top-n $(TOPN)
 	@echo "Cloud ETL complete ✅ (top-n=$(TOPN))"
-
-cloud-validate: require-CLOUD_DB_HOST require-CLOUD_DB_NAME require-CLOUD_DB_USER require-CLOUD_PGPASSWORD
-	DATABASE_URL="postgresql+psycopg2://$(CLOUD_DB_USER):$(CLOUD_PGPASSWORD)@$(CLOUD_DB_HOST):5432/$(CLOUD_DB_NAME)" \
-	python -m $(VALIDATE_MODULE) --top-n $(TOPN)
-	@echo "Cloud validation passed ✅ (top-n=$(TOPN))"
-
-cloud-refresh: cloud-reset cloud-schema cloud-etl cloud-validate
-	@echo "CLOUD REFRESH DONE ✅ (top-n=$(TOPN))"
-
+	
 # -------------------------
 # Push LOCAL docker data -> CLOUD (dump + restore)
 # -------------------------
