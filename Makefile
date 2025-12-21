@@ -64,7 +64,7 @@ test:
 require-%:
 	@test -n "$($*)" || (echo "Missing $* in .env" && exit 1)
 
-# Build a connection string that matches your working manual psql command
+# Build a connection string that matches working manual psql command
 CLOUD_CONNINFO = host=$(CLOUD_DB_HOST) port=5432 dbname=$(CLOUD_DB_NAME) user=$(CLOUD_DB_USER) sslmode=require
 
 cloud-psql: require-CLOUD_DB_HOST require-CLOUD_DB_NAME require-CLOUD_DB_USER require-CLOUD_PGPASSWORD
@@ -79,12 +79,6 @@ cloud-schema: require-CLOUD_DB_HOST require-CLOUD_DB_NAME require-CLOUD_DB_USER 
 	PGPASSWORD="$(CLOUD_PGPASSWORD)" psql "$(CLOUD_CONNINFO)" -f db/schema.sql
 	@echo "Cloud schema applied ✅"
 
-# Run ETL pointing at cloud (your Python uses DATABASE_URL)
-cloud-etl: require-CLOUD_DB_HOST require-CLOUD_DB_NAME require-CLOUD_DB_USER require-CLOUD_PGPASSWORD
-	DATABASE_URL="postgresql+psycopg2://$(CLOUD_DB_USER):$(CLOUD_PGPASSWORD)@$(CLOUD_DB_HOST):5432/$(CLOUD_DB_NAME)" \
-	python -m $(ETL_MODULE) --top-n $(TOPN)
-	@echo "Cloud ETL complete ✅ (top-n=$(TOPN))"
-	
 # -------------------------
 # Push LOCAL docker data -> CLOUD (dump + restore)
 # -------------------------
