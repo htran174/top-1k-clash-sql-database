@@ -141,7 +141,7 @@ def load_deck_type_overrides(conn) -> Dict[str, str]:
 
 def truncate_snapshot_tables(conn) -> None:
     """
-    Match your schema table names. DO NOT truncate deck_type_overrides.
+    Match schema table names. DO NOT truncate deck_type_overrides.
     Child -> parent order.
     """
     ordered = [
