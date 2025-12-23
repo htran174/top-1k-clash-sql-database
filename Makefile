@@ -7,15 +7,18 @@ include .env
 export
 endif
 
-TOPN ?= 1000
+TOPN ?= 20
 
 ETL_MODULE ?= scripts.etl_snapshot_topn
 VALIDATE_MODULE ?= scripts.validate_snapshot
 
-.PHONY: db-up db-down db-reset wait-db schema etl validate refresh refresh-hard test
+.PHONY: db-up db-down db-reset wait-db schema etl validate refresh refresh-hard test db-query
 
 db-up:
 	docker compose up -d
+
+db-query: db-up
+	docker compose exec db psql -U clash -d clash
 
 # SAFE: stop containers, keep database volume
 db-down:
