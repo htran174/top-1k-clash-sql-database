@@ -7,7 +7,7 @@ include .env
 export
 endif
 
-TOPN ?= 20
+TOPN ?= 1000
 
 ETL_MODULE ?= scripts.etl_snapshot_topn
 VALIDATE_MODULE ?= scripts.validate_snapshot
@@ -47,6 +47,7 @@ validate: wait-db
 	python -m $(VALIDATE_MODULE) --top-n $(TOPN)
 	@echo "Validation passed ✅ (top-n=$(TOPN))"
 
+#replace old data with new data
 refresh: db-up schema etl validate
 	@echo "REFRESH DONE ✅ (top-n=$(TOPN))"
 
@@ -98,6 +99,7 @@ cloud-load-from-local: wait-db require-CLOUD_DB_HOST require-CLOUD_DB_NAME requi
 
 .PHONY: cloud-refresh cloud-validate cloud-publish
 
+#full local to cloud upload
 cloud-refresh: cloud-reset cloud-schema cloud-load-from-local
 	@echo "CLOUD REFRESH COMPLETE 🚀"
 
