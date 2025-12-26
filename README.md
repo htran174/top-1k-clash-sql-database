@@ -1,6 +1,6 @@
 # Clash Royale Top1K Meta Snapshot Warehouse (Postgres)
 
-A data engineering / analytics project that ingests the Top 1,000 global ladder from the official Clash Royale REST API, normalizes and cleans the data, and loads it into a queryable Postgres schema designed for meta analysis:
+A data engineering / analytics project that ingests the Top 1,000 global ladder from the official Clash Royale REST API, normalizes and cleans the data, and loads it into a queryable Postgres schema designed for competitive meta analysis.:
 
 - Which **deck types** are most played?
 - What are their **win rates**?
@@ -10,11 +10,15 @@ A data engineering / analytics project that ingests the Top 1,000 global ladder 
 This project runs in **snapshot mode** (TRUNCATE + RELOAD) so each refresh produces a clean, consistent “current meta” dataset.
 
 ---
+- [Features](#features)
+- [Schema Overview](#schema-overview)
+- [Dashboard Preview](#dashboard-preview-looker-studio)
+
 
 ## Features
 
 - **Top 1,000 ladder ingestion** from Clash Royale official API
-- **Single-run ETL** (Python) to extract → clean → transform → load
+- **Single-run ETL pipeline** (Python) to extract → clean → transform → load
 - **Analytics-ready Postgres schema** (dimensions + relationship/fact tables)
 - Tracks **uses** and **wins**
 - Aggregations for:
@@ -34,7 +38,7 @@ This project runs in **snapshot mode** (TRUNCATE + RELOAD) so each refresh produ
 - **Docker / Docker Compose** (local database)
 - **Google Cloud SQL (Postgres)** (hosted warehouse)
 - **SQL** (schema + analysis queries)
-- **Looker Studio** (for easy clean visualization)
+- **Looker Studio** (visualization layer on top of Cloud SQL)
 
 ---
 
@@ -108,14 +112,16 @@ The schema was designed up-front as a relationship model (Mermaid → exported d
 ### Setup
 1) Create `.env` from the .env.example
 
+[Clash Royale Official REST API](https://developer.clashroyale.com)
+
 ### Start Postgres + apply schema + upload it into the cloud
 ```bash
 make refresh #turn on docker, create schema, and call etl
 make cloud-publish #send local version into the cloud
 ```
 ### Dashboard from Google Looker Studio using the sql Data
-Relationship Diagram:
-![Dashboard1:](images/Dashboard1.png)
-![Dashboard1:](images/Dashboard2.png)
+🔗 **Live Dashboard:**  
+https://lookerstudio.google.com/s/qxx95a5Optk
 
-
+![Meta Overview Dashboard](images/Dashboard1.png)
+![Archetype Matchup Analysis](images/Dashboard2.png)
