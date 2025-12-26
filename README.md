@@ -10,6 +10,16 @@ A data engineering / analytics project that ingests the Top 1,000 global ladder 
 This project runs in **snapshot mode** (TRUNCATE + RELOAD) so each refresh produces a clean, consistent “current meta” dataset.
 
 ---
+
+## Author
+
+**Hien Tran**  
+Computer Science Undergraduate · Data & Analytics Engineering
+
+- 🔗 LinkedIn: https://www.linkedin.com/in/YOUR-LINKEDIN
+- 💻 GitHub: https://github.com/YOUR-GITHUB
+
+---
 ## Quick Links
 - [Features](#features)
 - [Schema Overview](#schema-overview)
@@ -122,7 +132,7 @@ make cloud-publish #send local version into the cloud
 ```
 ### Dashboard Preview 
 🔗 **Live Dashboard From Looker Studio:**  
-https://lookerstudio.google.com/s/qxx95a5Optk
+https://lookerstudio.google.com/s/iwyqsmT41Oc
 
 ![Meta Overview Dashboard](images/Dashboard1.png)
 ![Archetype Matchup Analysis](images/Dashboard2.png)
