@@ -13,7 +13,7 @@ This project runs in **snapshot mode** (TRUNCATE + RELOAD) so each refresh produ
 ## Quick Links
 - [Features](#features)
 - [Schema Overview](#schema-overview)
-- [Dashboard Preview](#dashboard-preview-looker-studio)
+- [Dashboard Preview](#dashboard-preview)
 
 
 ## Features
@@ -120,8 +120,8 @@ The schema was designed up-front as a relationship model (Mermaid → exported d
 make refresh #turn on docker, create schema, and call etl
 make cloud-publish #send local version into the cloud
 ```
-### Dashboard Preview Looker Studio
-🔗 **Live Dashboard:**  
+### Dashboard Preview 
+🔗 **Live Dashboard From Looker Studio:**  
 https://lookerstudio.google.com/s/qxx95a5Optk
 
 ![Meta Overview Dashboard](images/Dashboard1.png)
